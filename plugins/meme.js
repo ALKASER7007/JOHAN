@@ -1,27 +1,90 @@
-import axios from 'axios';
+let handler = async (m, { conn, args, usedPrefix, command }) => {
+    conn.relayMessage(m.chat, {
+      viewOnceMessage: {
+        message: {
+          interactiveMessage: {
+            header: {
+              title: '*🎗️ قـائـمـة الـاوامــر🎗️*'
+            },
+            body: {
+              text: '🧿 افتح القائمة بواسطة الزر\n🍒 لا تلعب كثير في القائمة'
+            },
+            nativeFlowMessage: {
+              buttons: [
+                {
+                  name: 'single_select',
+                  buttonParamsJson: JSON.stringify({
+                    title: 'دوس عليا',
+                    sections: [
+                      {
+                        title: 'List',
+                        highlight_label: 'ON',
+                        rows: [
+                          {
+                            header: '☘️ قـسـم الـمطور',
+                            title: '.اوامر_المطور',
+                            description: '',
+                            id: 'te'
+                          },
+                          {
+                            header: '☘️ قـسـم الـجروب',
+                            title: '.اوامر_الجروب',
+                            description: '',
+                            id: 'te'
+                          },
+                          {
+                            header: '☘️ قـسـم الـتحميل',
+                            title: '.اوامر_التحميل',
+                            description: '',
+                            id: 'te'
+                          },
+                          {
+                            header: '☘️ قـسـم الـترفيه',
+                            title: '.اوامر_الترفيه',
+                            description: '',
+                            id: 'te'
+                          },
+                          {
+                            header: '☘️ قـسـم الـتحميل',
+                            title: '.اوامر_التحميل',
+                            description: '',
+                            id: 'te'
+                          },
+                          {
+                            header: '☘️ قـسـم الـدين',
+                            title: '.اوامر_الدين',
+                            description: '',
+                            id: 'te'
+                          },
+                          {
+                            header: '☘️ كل الاوامر',
+                            title: '.كل_الاوامر',
+                            description: '',
+                            id: 'te'
+                          },
+                          {
+                            header: ' ☘️قـسـم الـصوتيات',
+                            title: '.اوامر_الصوتيات',
+                            description: '',
+                            id: 'te'
+                          }
+                        ]
+                      }
+                    ]
+                  }),
+                  messageParamsJson: ''
+                }
+              ]
+            }
+          }
+        }
+      }
+    }, {})
 
-const handler = async (m, { conn, usedPrefix, command }) => {
-  try {
-    const response = await axios.get('https://meme-api.com/gimme', {
-      responseType: 'json', 
-    });
+}
 
-    const memeData = response.data;
-    const imageUrl = memeData.url;
-    const title = memeData.title;
+handler.help = ['info']
+handler.tags = ['main']
+handler.command = ['القائمة', 'القائمه']
 
-    
-    conn.sendFile(m.chat, imageUrl, 'meme.jpg', title, m);
-    m.react('😆');
-  } catch (error) {
-    console.error(error);
-    m.reply('Sorry, an error occurred while fetching the meme.');
-  }
-};
-
-handler.help = ['meme'];
-handler.tags = ['fun'];
-handler.command = ['meme', 'memes'];
-handler.diamond = false;
-
-export default handler;
+export default handler
